@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌈 Eat the Rainbow – June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red:    #e74c3c;
+    --orange: #e67e22;
+    --yellow: #f1c40f;
+    --green:  #27ae60;
+    --blue:   #2980b9;
+    --purple: #8e44ad;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background: #fff8f0;
+    overflow-x: hidden;
+  }
+
+  /* ── PRIDE BANNER ── */
+  .pride-stripe {
+    height: 8px;
+    background: linear-gradient(90deg,
+      var(--red) 0% 16.6%,
+      var(--orange) 16.6% 33.2%,
+      var(--yellow) 33.2% 49.8%,
+      var(--green) 49.8% 66.4%,
+      var(--blue) 66.4% 83%,
+      var(--purple) 83% 100%
+    );
+  }
+
+  header {
+    background: linear-gradient(135deg, #1a0533 0%, #0d1a4a 50%, #0a2a1a 100%);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* floating rainbow arcs behind header */
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 120%, rgba(142,68,173,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 20% 120%, rgba(41,128,185,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 80% 120%, rgba(231,76,60,0.2) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .pride-msg {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--red), var(--orange), var(--yellow), var(--green), var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.6rem;
+    animation: shimmer 4s linear infinite;
+    background-size: 200% auto;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    color: white;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    position: relative;
+  }
+
+  .rainbow-underline {
+    display: block;
+    height: 5px;
+    width: 220px;
+    margin: 0.5rem auto 0;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--red), var(--orange), var(--yellow), var(--green), var(--blue), var(--purple));
+  }
+
+  .header-sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.95rem;
+    margin-top: 0.8rem;
+    position: relative;
+  }
+
+  /* ── COLOUR KEY ── */
+  .color-key {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding: 1rem 2rem;
+    background: white;
+    border-bottom: 1px solid #f0e8ff;
+  }
+
+  .key-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #555;
+  }
+
+  .key-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .page-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 210px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar { }
+
+  .sidebar-card {
+    background: white;
+    border-radius: 20px;
+    border: 2px solid #f0e8ff;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-card h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .user-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 2.5px solid #eee;
+    cursor: pointer;
+    transition: all 0.18s;
+    user-select: none;
+    background: #fafafa;
+  }
+
+  .user-chip.active {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .user-chip.inactive { opacity: 0.45; }
+
+  .chip-dot {
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .chip-name {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .chip-score {
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .chip-rank {
+    font-size: 0.8rem;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  /* stats card */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .stat-box {
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .stat-box .sv { font-size: 1.4rem; font-weight: 800; }
+  .stat-box .sl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ── AWARDS ── */
+  .award-row { display:flex; align-items:center; gap:7px; padding:6px 4px; border-bottom:0.5px solid #f5f0e8; }
+  .award-row:last-child { border-bottom:none; }
+  .award-dot { width:11px; height:11px; border-radius:50%; flex-shrink:0; }
+  .award-name { flex:1; font-size:0.82rem; font-weight:700; color:#333; }
+  .award-badges { display:flex; gap:3px; flex-wrap:wrap; }
+  .award-badge { background:#fff9c4; border:1px solid #f1c40f; border-radius:6px; font-size:0.65rem; font-weight:800; color:#7d6608; padding:2px 5px; white-space:nowrap; }
+  .award-none { font-size:0.78rem; color:#ccc; text-align:center; padding:0.5rem 0; }
+
+  /* ── CALENDAR ── */
+  .cal-section { }
+
+  .month-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .month-label::before, .month-label::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, #e0d0ff);
+  }
+
+  .month-label::after {
+    background: linear-gradient(90deg, #e0d0ff, transparent);
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+
+  .dow-label {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 4px 0 6px;
+    color: #aaa;
+  }
+
+  .day-cell {
+    background: white;
+    border-radius: 14px;
+    border: 2px solid #f5f0ff;
+    padding: 6px 5px 7px;
+    min-height: 86px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .day-cell:hover { border-color: #d4b8ff; box-shadow: 0 2px 10px rgba(142,68,173,0.08); }
+
+  .day-cell.empty { background: transparent; border-color: transparent; box-shadow: none; }
+
+  .day-cell.today {
+    border-color: var(--yellow);
+    background: linear-gradient(135deg, #fffde7, #fff8e1);
+    box-shadow: 0 0 0 3px rgba(241,196,15,0.15);
+  }
+
+  .day-cell.weekend { background: linear-gradient(135deg, #fff0f8, #fff8ff); }
+
+  .day-num {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #ccc;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  .today .day-num { color: #c8960c; }
+  .weekend .day-num { color: #c89acf; }
+
+  .rainbows-wrap { display: flex; flex-direction: column; gap: 3px; }
+
+  .r-row {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .r-label {
+    font-size: 0.6rem;
+    color: #bbb;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 48px;
+  }
+
+  /* ── RAINBOW SVG ── */
+  .rb { width: 30px; height: 17px; flex-shrink: 0; }
+
+  /* ── NO DATA ── */
+  .no-data {
+    background: white;
+    border-radius: 16px;
+    border: 2px dashed #e0d0ff;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    color: #bbb;
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .no-data strong { display: block; font-size: 1.4rem; margin-bottom: 0.4rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    color: #ccc;
+  }
+
+  .pride-footer-stripe {
+    height: 5px;
+    background: linear-gradient(90deg,
+      var(--red) 0% 16.6%, var(--orange) 16.6% 33.2%,
+      var(--yellow) 33.2% 49.8%, var(--green) 49.8% 66.4%,
+      var(--blue) 66.4% 83%, var(--purple) 83% 100%
+    );
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 720px) {
+    .page-body { grid-template-columns: 1fr; }
+    .sidebar { order: -1; }
+    .stat-grid { grid-template-columns: repeat(4, 1fr); }
+    .cal-grid { gap: 3px; }
+    .day-cell { min-height: 68px; padding: 4px 3px 5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="pride-stripe"></div>
+
+<header>
+  <p class="pride-msg">🏳️‍🌈 Happy Pride Month! 🏳️‍🌈</p>
+  <h1>🌈 Eat the Rainbow
+    <span class="rainbow-underline"></span>
+  </h1>
+  <p class="header-sub">June 2026 — track the colours on your plate</p>
+</header>
+
+<div class="color-key">
+  <div class="key-item"><div class="key-dot" style="background:var(--red)"></div> Red</div>
+  <div class="key-item"><div class="key-dot" style="background:var(--orange)"></div> Orange</div>
+  <div class="key-item"><div class="key-dot" style="background:var(--yellow)"></div> Yellow</div>
+  <div class="key-item"><div class="key-dot" style="background:var(--green)"></div> Green</div>
+  <div class="key-item"><div class="key-dot" style="background:var(--blue)"></div> Blue</div>
+  <div class="key-item"><div class="key-dot" style="background:var(--purple)"></div> Purple</div>
+</div>
+
+<div class="page-body">
+
+  <div class="cal-section">
+    <div class="month-label">June 2026</div>
+    <div id="noDataMsg" class="no-data" style="display:none">
+      <strong>📂</strong>
+      No <code>data.csv</code> found.<br>
+      Make sure <code>data.csv</code> is in the same folder as this file<br>
+      and open via a local server or just drop it below.
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+
+  <div class="sidebar">
+
+    <div class="sidebar-card">
+      <h2>🏆 Leaderboard</h2>
+      <div class="user-list" id="userList"></div>
+    </div>
+
+    <div class="sidebar-card">
+      <h2>📊 Stats</h2>
+      <div class="stat-grid" id="statGrid"></div>
+    </div>
+
+    <div class="sidebar-card" style="border-color:#fff0a0">
+      <h2>🌈 Weekly Rainbows</h2>
+      <div id="awardsPanel"></div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Edit <strong>data.csv</strong> to update entries, then refresh ✨
+  <div class="pride-footer-stripe"></div>
+</footer>
+
+<script>
+const RAINBOW_COLS = ['red','orange','yellow','green','blue','purple'];
+const RAINBOW_HEX  = { red:'#e74c3c', orange:'#e67e22', yellow:'#f1c40f', green:'#27ae60', blue:'#2980b9', purple:'#8e44ad' };
+const USER_COLORS  = ['#e74c3c','#8e44ad','#2980b9','#27ae60','#e67e22','#c0392b','#1a5276','#196f3d'];
+
+let users = [];      // [{name, color, totalScore}]
+let entries = {};    // { day: { playerName: [colorsEaten] } }
+let activeUsers = new Set();
+
+// ── CSV PARSING ──
+function parseCSV(text) {
+  const lines = text.trim().split('\n').filter(l => l.trim());
+  if (!lines.length) return;
+  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+
+  const playerMap = {};  // name -> color (first seen wins)
+  const entryRows = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const vals = lines[i].split(',').map(v => v.trim());
+    const row = {};
+    headers.forEach((h, idx) => row[h] = vals[idx] || '');
+
+    const name  = row['player'];
+    const color = row['color'];
+    const day   = parseInt(row['day']);
+    if (!name || isNaN(day)) continue;
+
+    if (!playerMap[name]) playerMap[name] = color || USER_COLORS[Object.keys(playerMap).length % USER_COLORS.length];
+
+    const colors = RAINBOW_COLS.filter(c => (row[c] || '').toLowerCase() === 'yes');
+    entryRows.push({ name, day, colors });
+  }
+
+  // Build users array preserving CSV order
+  users = Object.entries(playerMap).map(([name, color]) => ({ name, color, totalScore: 0 }));
+
+  // Build entries
+  entries = {};
+  entryRows.forEach(({ name, day, colors }) => {
+    if (!entries[day]) entries[day] = {};
+    entries[day][name] = colors;
+  });
+
+  // Compute scores
+  users.forEach(u => {
+    u.totalScore = Object.values(entries).reduce((sum, dayE) => sum + ((dayE[u.name]||[]).length), 0);
+  });
+
+  // Default active: top 4 by today's activity, else top 4 by total score
+  const MAX_ACTIVE = 4;
+  const now = new Date();
+  const todayNum = (now.getFullYear()===2026 && now.getMonth()===5) ? now.getDate() : -1;
+  const todayE = entries[todayNum] || {};
+  const ranked = [...users].sort((a, b) => {
+    const aToday = (todayE[a.name]||[]).length;
+    const bToday = (todayE[b.name]||[]).length;
+    if (bToday !== aToday) return bToday - aToday;
+    return b.totalScore - a.totalScore;
+  });
+  activeUsers = new Set(ranked.slice(0, MAX_ACTIVE).map(u => u.name));
+}
+
+// ── RAINBOW SVG ──
+function rainbowSVG(colorList) {
+  const W = 30, H = 17;
+  const cx = W / 2, cy = H * 1.1;
+  const rOuter = W * 0.49;
+  const n = RAINBOW_COLS.length;
+  const bandW = rOuter / (n + 0.4);
+  const paths = RAINBOW_COLS.map((col, i) => {
+    const ro = rOuter - i * bandW;
+    const ri = Math.max(0, ro - bandW * 0.78);
+    const fill = colorList.includes(col) ? RAINBOW_HEX[col] : '#ececec';
+    return `<path d="M${cx-ro},${cy} A${ro},${ro} 0 0,1 ${cx+ro},${cy} L${cx+ri},${cy} A${ri},${ri} 0 0,0 ${cx-ri},${cy} Z" fill="${fill}"/>`;
+  }).join('');
+  return `<svg class="rb" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
+}
+
+// ── RENDER ──
+function render() {
+  renderLeaderboard();
+  renderStats();
+  renderCalendar();
+  renderAwards();
+}
+
+function renderAwards() {
+  const WEEKS = [
+    { label:'Wk 1', days:[1,2,3,4,5,6,7] },
+    { label:'Wk 2', days:[8,9,10,11,12,13,14] },
+    { label:'Wk 3', days:[15,16,17,18,19,20,21] },
+    { label:'Wk 4', days:[22,23,24,25,26,27,28] },
+    { label:'Wk 5', days:[29,30] },
+  ];
+  function weeklyRainbows(userName) {
+    return WEEKS.filter(w => {
+      const seen = new Set();
+      w.days.forEach(d => ((entries[d]||{})[userName]||[]).forEach(c => seen.add(c)));
+      return RAINBOW_COLS.every(c => seen.has(c));
+    });
+  }
+  const sorted = [...users].sort((a,b) => b.totalScore - a.totalScore);
+  const anyWon = sorted.some(u => weeklyRainbows(u.name).length > 0);
+  const rows = sorted.map(u => {
+    const won = weeklyRainbows(u.name);
+    const count = won.length > 0 ? `<span style="font-size:0.7rem;font-weight:800;color:#7d6608;margin-right:2px">${won.length}x</span>` : '';
+    const badges = won.map(w => `<span class="award-badge">${w.label}</span>`).join('');
+    return `<div class="award-row">
+      <div class="award-dot" style="background:${u.color}"></div>
+      <span class="award-name">${u.name}</span>
+      <div class="award-badges">${count}${badges}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('awardsPanel').innerHTML = anyWon ? rows : `<div class="award-none">No weekly rainbows yet!</div>`;
+  if (!anyWon) document.getElementById('awardsPanel').innerHTML += rows;
+}
+
+function renderLeaderboard() {
+  const sorted = [...users].sort((a,b) => b.totalScore - a.totalScore);
+  const medals = ['🥇','🥈','🥉'];
+  const atMax = activeUsers.size >= 4;
+  const chips = sorted.map((u, i) => {
+    const active = activeUsers.has(u.name);
+    const disabled = !active && atMax;
+    return `<div class="user-chip ${active?'active':'inactive'}"
+        style="border-color:${active ? u.color : '#eee'}; cursor:${disabled?'not-allowed':'pointer'}; opacity:${disabled?'0.3':active?'1':'0.55'}"
+        onclick="toggleUser('${u.name}')">
+      <span class="chip-rank">${medals[i] || (i+1)+'.'}</span>
+      <div class="chip-dot" style="background:${u.color}"></div>
+      <span class="chip-name">${u.name}</span>
+      <span class="chip-score" style="color:${u.color}">${u.totalScore}</span>
+    </div>`;
+  }).join('');
+  const hint = atMax ? `<p style="font-size:0.72rem;color:#bbb;text-align:center;margin-top:6px">4/4 shown — deselect to swap</p>` : '';
+  document.getElementById('userList').innerHTML = chips + hint;
+}
+
+function renderStats() {
+  const totalEntries = Object.values(entries).reduce((s, d) => s + Object.values(d).filter(c => c.length === 6).length, 0);
+  const daysLogged  = Object.keys(entries).length;
+  const topUser     = [...users].sort((a,b) => b.totalScore-a.totalScore)[0];
+  const colorCounts = {};
+  RAINBOW_COLS.forEach(c => colorCounts[c] = 0);
+  Object.values(entries).forEach(d => Object.values(d).forEach(cols => cols.forEach(c => colorCounts[c]++)));
+  const topColor    = Object.entries(colorCounts).sort((a,b)=>b[1]-a[1])[0];
+
+  const statBoxes = [
+    { val: totalEntries, lbl: 'Full rainbows', bg:'#f0e8ff', fg:'#6c3483' },
+    { val: daysLogged,   lbl: 'Days',     bg:'#e8f8f0', fg:'#1e8449' },
+    { val: topUser ? topUser.name.split(' ')[0] : '—', lbl: 'Leader', bg:'#fff3e0', fg:'#a04000' },
+    { val: topColor ? topColor[0].charAt(0).toUpperCase()+topColor[0].slice(1) : '—', lbl: 'Top colour', bg:'#fde8ec', fg:'#922b21' },
+  ];
+
+  document.getElementById('statGrid').innerHTML = statBoxes.map(s =>
+    `<div class="stat-box" style="background:${s.bg}">
+      <div class="sv" style="color:${s.fg}">${s.val}</div>
+      <div class="sl" style="color:${s.fg}">${s.lbl}</div>
+    </div>`
+  ).join('');
+}
+
+function renderCalendar() {
+  const today = new Date();
+  const isJune26 = today.getFullYear()===2026 && today.getMonth()===5;
+  const todayDay = isJune26 ? today.getDate() : -1;
+  const weekends = new Set([6,7,13,14,20,21,27,28]); // Sat/Sun of June 2026
+
+  const activeList = users.filter(u => activeUsers.has(u.name));
+  const dows = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html = dows.map(d => `<div class="dow-label">${d}</div>`).join('');
+
+  // June 1 2026 = Monday (dow index 1)
+  html += `<div class="day-cell empty"></div>`;
+
+  for (let d = 1; d <= 30; d++) {
+    const isToday   = d === todayDay;
+    const isWeekend = weekends.has(d);
+    let cls = 'day-cell';
+    if (isToday)   cls += ' today';
+    else if (isWeekend) cls += ' weekend';
+
+    const dayE = entries[d] || {};
+    const rowsHtml = activeList.map(u => {
+      const cols = dayE[u.name] || [];
+      return `<div class="r-row">
+        ${rainbowSVG(cols)}
+        <span class="r-label" style="color:${u.color}">${u.name.split(' ')[0]}</span>
+      </div>`;
+    }).join('');
+
+    html += `<div class="${cls}">
+      <div class="day-num">${d}</div>
+      <div class="rainbows-wrap">${rowsHtml}</div>
+    </div>`;
+  }
+
+  document.getElementById('calGrid').innerHTML = html;
+}
+
+function toggleUser(name) {
+  if (activeUsers.has(name)) {
+    activeUsers.delete(name);
+  } else {
+    if (activeUsers.size >= 4) {
+      alert('Maximum 4 players can be shown at once. Deselect someone first.');
+      return;
+    }
+    activeUsers.add(name);
+  }
+  render();
+}
+
+// ── LOAD data.csv from same folder ──
+fetch('data.csv')
+  .then(r => { if (!r.ok) throw new Error('data.csv not found'); return r.text(); })
+  .then(text => { parseCSV(text); render(); })
+  .catch(err => { console.warn(err); render(); });
+
+render();
+</script>
+</body>
+</html>
