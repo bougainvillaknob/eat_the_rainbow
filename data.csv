@@ -1,9 +1,4 @@
 player,color,day,red,orange,yellow,green,blue,purple
-Alice,#e74c3c,1,yes,no,yes,yes,no,no
-Alice,#e74c3c,2,no,yes,yes,yes,no,yes
-Alice,#e74c3c,4,yes,yes,no,yes,yes,no
-Bob,#3498db,1,no,no,yes,yes,no,yes
-Bob,#3498db,3,yes,no,no,yes,no,no
-Bob,#3498db,5,yes,yes,yes,no,no,no
-Carol,#2ecc71,2,yes,yes,yes,yes,yes,yes
-Carol,#2ecc71,4,no,yes,no,yes,no,no
+The Baker,#e74c3c,4,no,yes,yes,yes,no,yes
+The Maker,#3498db,4,no,yes,no,yes,no,no
+The Gamer,#2ecc71,4,no,yes,no,yes,no,no
