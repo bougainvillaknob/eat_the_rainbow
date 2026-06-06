@@ -2,6 +2,6 @@ player,color,day,red,orange,yellow,green,blue,purple
 TheBaker,#ff007f,4,no,yes,yes,yes,yes,yes
 TheMaker,#fff200,4,yes,no,no,yes,yes,yes
 TheGamer,#2ecc71,4,no,yes,no,yes,no,no
-TheGamer,#2ecc71,5,yes,yes,yes,yes,no,no
+TheGamer,#2ecc71,5,yes,yes,yes,yes,no,yes
 TheMaker,#fff200,5,yes,no,no,yes,no,no
 TheBaker,#ff007f,5,no,yes,yes,no,no,yes
