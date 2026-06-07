@@ -485,6 +485,14 @@ let users = [];      // [{name, color, totalScore}]
 let entries = {};    // { day: { playerName: [colorsEaten] } }
 let activeUsers = new Set();
 
+const WEEKS = [
+    { label:'Wk 1', days:[1,2,3,4,5,6] },          // Mon 1 – Sat 6 (partial, no Sun)
+    { label:'Wk 2', days:[7,8,9,10,11,12,13] },    // Sun 7 – Sat 13
+    { label:'Wk 3', days:[14,15,16,17,18,19,20] }, // Sun 14 – Sat 20
+    { label:'Wk 4', days:[21,22,23,24,25,26,27] }, // Sun 21 – Sat 27
+    { label:'Wk 5', days:[28,29,30] },             // Sun 28 – Mon 30 (partial)
+];
+ 
 // ── CSV PARSING ──
 function parseCSV(text) {
   const lines = text.trim().split('\n').filter(l => l.trim());
@@ -564,24 +572,17 @@ function render() {
 }
 
 function renderAwards() {
-  const WEEKS = [
-    { label:'Wk 1', days:[1,2,3,4,5,6] },          // Mon 1 – Sat 6 (partial, no Sun)
-    { label:'Wk 2', days:[7,8,9,10,11,12,13] },    // Sun 7 – Sat 13
-    { label:'Wk 3', days:[14,15,16,17,18,19,20] }, // Sun 14 – Sat 20
-    { label:'Wk 4', days:[21,22,23,24,25,26,27] }, // Sun 21 – Sat 27
-    { label:'Wk 5', days:[28,29,30] },             // Sun 28 – Mon 30 (partial)
-  ];
-function weeklyRainbows(userName) {
- // For each week, count how many complete sets of all 6 colours the player earned
- // (minimum count of any single colour across the week)
-  return WEEKS.map(w => {
-    const counts = {};
-    RAINBOW_COLS.forEach(c => counts[c] = 0);
-    w.days.forEach(d => ((entries[d]||{})[userName]||[]).forEach(c => counts[c]++));
-    const sets = Math.min(...RAINBOW_COLS.map(c => counts[c]));
-    return { label: w.label, sets };
-  }).filter(w => w.sets > 0);
- }
+  function weeklyRainbows(userName) {
+  // For each week, count how many complete sets of all 6 colours the player earned
+  // (minimum count of any single colour across the week)
+   return WEEKS.map(w => {
+     const counts = {};
+     RAINBOW_COLS.forEach(c => counts[c] = 0);
+     w.days.forEach(d => ((entries[d]||{})[userName]||[]).forEach(c => counts[c]++));
+     const sets = Math.min(...RAINBOW_COLS.map(c => counts[c]));
+     return { label: w.label, sets };
+   }).filter(w => w.sets > 0);
+  }
   const sorted = [...users].sort((a,b) => b.totalScore - a.totalScore);
   const anyWon = sorted.some(u => weeklyRainbows(u.name).length > 0);
   const rows = sorted.map(u => {
