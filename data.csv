@@ -8,9 +8,10 @@ TheBaker,#ff007f,5,yes,yes,yes,yes,yes,yes
 TheDeclutterer,#00ffff,5,no,yes,yes,no,yes,no
 TheGamer,#2ecc71,6,yes,yes,yes,yes,yes,yes
 TheBaker,#ff007f,6,yes,yes,yes,yes,yes,yes
-TheMaker,#fff200,6,yes,no,no,yes,no,no
+TheMaker,#fff200,6,yes,no,yes,yes,no,no
 TheGamer,#2ecc71,7,yes,no,yes,yes,yes,no
 TheBaker,#ff007f,7,yes,yes,yes,yes,yes,yes
+TheMaker,#fff200,7,yes,yes,no,no,yes,yes
 TheBaker,#ff007f,8,yes,yes,no,yes,yes,yes
-TheMaker,#fff200,8,yes,no,no,yes,no,no
+TheMaker,#fff200,8,yes,no,no,yes,no,yes
 TheGamer,#2ecc71,8,yes,yes,yes,yes,yes,no
