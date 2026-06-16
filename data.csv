@@ -39,6 +39,9 @@ TheMaker,#fff200,13,yes,yes,no,no,no,no
 TheMaker,#fff200,14,yes,no,no,yes,no,yes
 TheBaker,#ff007f,15,yes,yes,yes,yes,yes,yes
 TheMaker,#fff200,15,yes,yes,no,yes,yes,yes
+TheGamer,#2ecc71,15,yes,yes,no,yes,no,no
+TheGamer,#2ecc71,16,no,yes,yes,no,yes,no
+TheBaker,#ff007f,13,no,no,yes,no,yes,yes
 
 
 
