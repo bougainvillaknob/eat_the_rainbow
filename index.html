@@ -672,8 +672,13 @@ function renderCalendar() {
     if (isToday)   cls += ' today';
     else if (isWeekend) cls += ' weekend';
 
+    // find which week this day belongs to
+    const week = WEEKS.find(w => w.days.includes(d));
+
     const dayE = entries[d] || {};
-    const rowsHtml = activeList.map(u => {
+    const rowsHtml = activeList
+      .filter(u => week && week.days.some(wd => (entries[wd]||{})[u.name]))
+      .map(u => {
       const cols = dayE[u.name] || [];
       return `<div class="r-row">
         ${rainbowSVG(cols)}
