@@ -481,7 +481,7 @@ const RAINBOW_HEX  = { red:'#e74c3c', orange:'#e67e22', yellow:'#f1c40f', green:
 const USER_COLORS  = ['#e74c3c','#8e44ad','#2980b9','#27ae60','#e67e22','#c0392b','#1a5276','#196f3d'];
 const POT_SVG = `<svg width='36' height='24' viewBox='0 0 36 24' xmlns='http://www.w3.org/2000/svg'><path d='M2,18 A14,14 0 0,1 34,18' fill='none' stroke='#e74c3c' stroke-width='2.2' stroke-linecap='round'/><path d='M4,18 A12,12 0 0,1 32,18' fill='none' stroke='#e67e22' stroke-width='2.2' stroke-linecap='round'/><path d='M6,18 A10,10 0 0,1 30,18' fill='none' stroke='#f1c40f' stroke-width='2.2' stroke-linecap='round'/><path d='M8,18 A8,8 0 0,1 28,18' fill='none' stroke='#27ae60' stroke-width='2.2' stroke-linecap='round'/><path d='M10,18 A6,6 0 0,1 26,18' fill='none' stroke='#2980b9' stroke-width='2.2' stroke-linecap='round'/><path d='M12,18 A4,4 0 0,1 24,18' fill='none' stroke='#8e44ad' stroke-width='2.2' stroke-linecap='round'/><ellipse cx='27' cy='19' rx='5.5' ry='1.8' fill='#c8960c'/><rect x='21.5' y='18.8' width='11' height='5.5' rx='2' fill='#d4a017'/><ellipse cx='27' cy='18.8' rx='5' ry='1.5' fill='#e6b830'/><circle cx='25.2' cy='17.5' r='1.6' fill='#f9e04b'/><circle cx='27' cy='16.7' r='1.6' fill='#f5d020'/><circle cx='28.8' cy='17.5' r='1.6' fill='#f9e04b'/></svg>`;
 
-let users = [];      // [{name, color, totalScore, weekScore}]
+let users = [];      // [{name, color, totalScore}]
 let entries = {};    // { day: { playerName: [colorsEaten] } }
 let activeUsers = new Set();
 
@@ -519,7 +519,7 @@ function parseCSV(text) {
   }
 
   // Build users array preserving CSV order
-  users = Object.entries(playerMap).map(([name, color]) => ({ name, color, totalScore: 0, weekScore: 0 }));
+  users = Object.entries(playerMap).map(([name, color]) => ({ name, color, totalScore: 0 }));
 
   // Build entries
   entries = {};
@@ -532,26 +532,11 @@ function parseCSV(text) {
   users.forEach(u => {
     u.totalScore = Object.values(entries).reduce((sum, dayE) => sum + ((dayE[u.name]||[]).length), 0);
   });
- 
-  // Compute current week scores
-  const now = new Date();
-  const todayNum = (now.getFullYear()===2026 && now.getMonth()===5) ? now.getDate() : -1;
-  const currentWeek = WEEKS.find(w => w.days.includes(todayNum)) || null;
-  users.forEach(u => {
-    u.weekScore = currentWeek
-      ? currentWeek.days.reduce((sum, d) => sum + ((entries[d]||{})[u.name]||[]).length, 0)
-      : 0;
-  });
 
- // Default active: top 4 by today's activity, else top 4 by week score
+ // Default active: top 4 by total score
   const MAX_ACTIVE = 4;
-  const todayE = entries[todayNum] || {};
-  const ranked = [...users].sort((a, b) => {
-    const aToday = (todayE[a.name]||[]).length;
-    const bToday = (todayE[b.name]||[]).length;
-    if (bToday !== aToday) return bToday - aToday;
-    return b.weekScore - a.weekScore;
-  });
+  const ranked = [...users].sort((a, b) => b.totalScore - a.totalScore);
+
   activeUsers = new Set(ranked.slice(0, MAX_ACTIVE).map(u => u.name));
 }
 
@@ -609,7 +594,7 @@ function renderAwards() {
 }
 
 function renderLeaderboard() {
-  const sorted = [...users].sort((a,b) => b.weekScore - a.weekScore);
+  const sorted = [...users].sort((a,b) => b.totalScore - a.totalScore);
   const medals = ['🥇','🥈','🥉'];
   const atMax = activeUsers.size >= 4;
   const chips = sorted.map((u, i) => {
@@ -621,7 +606,7 @@ function renderLeaderboard() {
       <span class="chip-rank">${medals[i] || (i+1)+'.'}</span>
       <div class="chip-dot" style="background:${u.color}"></div>
       <span class="chip-name">${u.name}</span>
-      <span class="chip-score" style="color:${u.color}">${u.weekScore}</span>
+      <span class="chip-score" style="color:${u.color}">${u.totalScore}</span>
     </div>`;
   }).join('');
   const hint = atMax ? `<p style="font-size:0.72rem;color:#bbb;text-align:center;margin-top:6px">4/4 shown — deselect to swap</p>` : '';
