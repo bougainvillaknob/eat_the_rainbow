@@ -552,7 +552,7 @@ function parseCSV(text) {
 }
 
 // ── RAINBOW SVG ──
-function rainbowSVG(colorList, W=30, H=17) {
+function rainbowSVG(colorList, W=30, H=17, isModal=false) {
   const cx = W / 2, cy = H * 1.1;
   const rOuter = W * 0.49;
   const n = RAINBOW_COLS.length;
@@ -563,7 +563,10 @@ function rainbowSVG(colorList, W=30, H=17) {
     const fill = colorList.includes(col) ? RAINBOW_HEX[col] : '#ececec';
     return `<path d="M${cx-ro},${cy} A${ro},${ro} 0 0,1 ${cx+ro},${cy} L${cx+ri},${cy} A${ri},${ri} 0 0,0 ${cx-ri},${cy} Z" fill="${fill}"/>`;
   }).join('');
-  return `<svg class="rb" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
+  const sizeAttr = isModal
+    ? `style="width:${W}px;height:${H}px;flex-shrink:0;"`
+    : `class="rb"`;
+  return `<svg ${sizeAttr} viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
 }
 
 // ── RENDER ──
@@ -718,7 +721,7 @@ function openModal(day) {
   document.getElementById('modalContent').innerHTML = activeList.map(u => {
     const cols = dayE[u.name] || [];
     return `<div class="modal-row">
-      ${rainbowSVG(cols, 80, 46)}
+      ${rainbowSVG(cols, 80, 46, true)}
       <span class="modal-name" style="color:${u.color}">${u.name}</span>
     </div>`;
   }).join('');
