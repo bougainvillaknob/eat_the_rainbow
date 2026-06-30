@@ -552,8 +552,7 @@ function parseCSV(text) {
 }
 
 // ── RAINBOW SVG ──
-function rainbowSVG(colorList) {
-  const W = 30, H = 17;
+function rainbowSVG(colorList, W=30, H=17) {
   const cx = W / 2, cy = H * 1.1;
   const rOuter = W * 0.49;
   const n = RAINBOW_COLS.length;
