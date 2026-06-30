@@ -406,6 +406,17 @@
     .r-label { font-size: 1.5vw; max-width: 10vw; }
     .rb { width: 4.5vw; height: 2.5vw; }
   }
+
+  /* ── MODAL ── */
+ .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:100; align-items:center; justify-content:center; }
+ .modal-bg.open { display:flex; }
+ .modal { background:white; border-radius:20px; padding:1.5rem; width:320px; max-width:90vw; box-shadow:0 8px 32px rgba(0,0,0,0.15); position:relative; }
+ .modal-day-num { font-family:'Fredoka One',cursive; font-size:1.4rem; color:#333; margin-bottom:1rem; }
+ .modal-row { display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:0.5px solid #f5f0e8; }
+ .modal-row:last-child { border-bottom:none; }
+ .modal-name { font-size:0.9rem; font-weight:700; flex:1; }
+ .modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.2rem; cursor:pointer; color:#aaa; }
+ 
 </style>
 </head>
 <body>
@@ -671,7 +682,7 @@ function renderCalendar() {
       </div>`;
     }).join('');
 
-    html += `<div class="${cls}">
+    html += `<div class="${cls}" onclick="openModal(${d})" style="cursor:pointer">
       <div class="day-num">${d}</div>
       <div class="rainbows-wrap">${rowsHtml}</div>
     </div>`;
@@ -700,6 +711,39 @@ fetch('data.csv')
   .catch(err => { console.warn(err); render(); });
 
 render();
+
+function openModal(day) {
+  const dayE = entries[day] || {};
+  const activeList = users.filter(u => activeUsers.has(u.name));
+  document.getElementById('modalTitle').textContent = `June ${day}`;
+  document.getElementById('modalContent').innerHTML = activeList.map(u => {
+    const cols = dayE[u.name] || [];
+    return `<div class="modal-row">
+      ${rainbowSVG(cols, 60, 34)}
+      <span class="modal-name" style="color:${u.color}">${u.name}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('modalBg').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalBg').classList.remove('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('modalBg').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+}); 
 </script>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-day-num" id="modalTitle"></div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+ 
 </body>
 </html>
