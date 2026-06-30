@@ -718,7 +718,7 @@ function openModal(day) {
   document.getElementById('modalContent').innerHTML = activeList.map(u => {
     const cols = dayE[u.name] || [];
     return `<div class="modal-row">
-      ${rainbowSVG(cols, 60, 34)}
+      ${rainbowSVG(cols, 80, 46)}
       <span class="modal-name" style="color:${u.color}">${u.name}</span>
     </div>`;
   }).join('');
